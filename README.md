@@ -1,0 +1,2 @@
+# cv_task
+这是一次CV作业的baseline，实现了对EMNIST数据集中的balanced数据集进行分类的任务。
