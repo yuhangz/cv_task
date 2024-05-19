@@ -1,11 +1,11 @@
 model:
-  conv_layers: [64,32]  # two convolutional layers with 32 and 64 filters respectively
-  filter_size: [3, 3]  # filter size for each convolutional layer
-  stride: [1, 1]  # stride for each convolutional layer
-  padding: [2, 2]  # padding for each convolutional layer
+  conv_layers: [256,128,64]  # two convolutional layers with 32 and 64 filters respectively
+  filter_size: [3, 3,3]  # filter size for each convolutional layer
+  stride: [1, 1,3]  # stride for each convolutional layer
+  padding: [2, 2, 2]  # padding for each convolutional layer
   pool_type: "MaxPool"  # options: "MaxPool", "AvgPool"
-  pool_size: [2, 2]  # pool size for each pooling layer
-  pool_stride: [2, 2]  # pool stride for each pooling layer
+  pool_size: [2, 2, 2]  # pool size for each pooling layer
+  pool_stride: [2, 2, 2]  # pool stride for each pooling layer
   hidden_layers: [512, 256]  # two fully connected layers with 512 and 256 nodes respectively
   activation_function: "ReLU"  # options: "ReLU", "LeakyReLU", "ELU"
   use_batch_norm: True  # options: True, False

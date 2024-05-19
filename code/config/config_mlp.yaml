@@ -14,5 +14,5 @@ optimizer:
   lr_scheduler: "StepLR"  # options: "StepLR", "ExponentialLR", None for no scheduler
   step_size: 5 # for StepLR
   gamma: 0.5 # for StepLR and ExponentialLR
-n_epochs: 120
-batch_size: 128
+n_epochs: 20
+batch_size: 256
