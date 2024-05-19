@@ -1,5 +1,5 @@
 model:
-  conv_layers: [32]  # two convolutional layers with 32 and 64 filters respectively
+  conv_layers: [64,32]  # two convolutional layers with 32 and 64 filters respectively
   filter_size: [3, 3]  # filter size for each convolutional layer
   stride: [1, 1]  # stride for each convolutional layer
   padding: [2, 2]  # padding for each convolutional layer
