@@ -11,7 +11,7 @@ class OptimizerType:
     SGD = 'SGD'
     Adam = 'Adam'
     RMSprop = 'RMSprop'
-    AdaGrad = 'Adagrad'
+    Adagrad = 'Adagrad'
     ASGD = 'ASGD'
 
 class Regularization:
@@ -38,3 +38,5 @@ search_space = {
     'regularization': get_ns(Regularization),
     'dropout_rate': [0, 0.1, 0.5]
 }
+
+print(search_space)

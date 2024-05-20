@@ -7,17 +7,17 @@ model:
   pool_size: [2, 2, 2]  # pool size for each pooling layer
   pool_stride: [2, 2, 2]  # pool stride for each pooling layer
   hidden_layers: [512, 256]  # two fully connected layers with 512 and 256 nodes respectively
-  activation_function: "ReLU"  # options: "ReLU", "LeakyReLU", "ELU"
-  use_batch_norm: True  # options: True, False
-  dropout_rate: 0.1  # options: any float between 0 and 1, or None for no dropout
-  regularization: "L1"  # options: "L1", "L2", None for no regularization
+  activation_function: "ELU"  # options: "ReLU", "LeakyReLU", "ELU"
+  use_batch_norm: False  # options: True, False
+  dropout_rate: 0  # options: any float between 0 and 1, or None for no dropout
+  regularization: null  # options: "L1", "L2", None for no regularization
   l1_lambda: 0.001
   l2_lambda: 0.001
   output_size: 47
   input_size: [1,28,28]
 
 optimizer:
-  type: "Adam"  # options: "SGD", "Adam", "RMSprop", "ASGD", "AdaGrad"
+  type: "RMSprop"  # options: "SGD", "Adam", "RMSprop", "ASGD", "AdaGrad"
   learning_rate: 0.001
   lr_scheduler: "StepLR"  # options: "StepLR", "ExponentialLR", None for no scheduler
   step_size: 10  # for StepLR

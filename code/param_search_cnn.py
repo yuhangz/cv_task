@@ -53,6 +53,21 @@ from sklearn.metrics import accuracy_score
 from type import HyperParameter, OptimizerType, LrScheduler, ActivationFunction, Regularization, search_space
 
 
+from loguru import logger
+
+DEBUG = False
+
+logger.add(
+    sink='./logs/param_search_cnn.log',  
+    level='INFO',
+    rotation='00:00',      
+    retention='7 days',     
+    compression='zip',        
+    encoding='utf-8',  
+    enqueue=True,
+    format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}"
+)
+
 
 def make_model(param: HyperParameter) -> nn.Sequential:
     activation = getattr(nn, param.activation_function)()
@@ -102,6 +117,8 @@ def get_cross_valiation_score_by_fold_id(
     k_fold: int
 ) -> tuple[float, float]:
     model = make_model(param)
+    model = model.cuda()
+    
     optimizer_type = param.optimizer_type
     lr_scheduler = param.lr_scheduler
     regularization = param.regularization
@@ -133,7 +150,6 @@ def get_cross_valiation_score_by_fold_id(
     writer = SummaryWriter(f'runs/CNN/{log_dir}')
     shutil.copy('config/config_mlp.yaml', f'runs/CNN/{log_dir}/config.yaml')
 
-    model = model.cuda()
     model.train()
     scores = []
     losses = []
@@ -175,12 +191,14 @@ def get_cross_valiation_score_by_fold_id(
                 output: torch.Tensor = model(val_data).cpu()
                 pred = output.argmax(1)
                 score = accuracy_score(pred.flatten(), pred.flatten())
-                loss = criterion(output, val_target)
+                loss = loss_function(output, val_target)
 
                 losses.append(loss.item())
                 scores.append(score)
-            
-        scheduler.step()    
+                
+            scheduler.step()
+            if DEBUG:
+                return scores[-1], losses[-1]
         # print training statistics 
         # calculate average loss over an epoch
         train_loss = train_loss / len(train_loader.dataset)
@@ -192,8 +210,8 @@ def get_cross_valiation_score_by_fold_id(
         # close the SummaryWriter
         writer.close()
         
-        mean_score = torch.mean(scores)
-        mean_loss = torch.mean(losses)
+        mean_score = sum(scores) / len(scores)
+        mean_loss = sum(losses) / len(losses)
         return mean_score, mean_loss
 
 def get_cross_valiation_score(
@@ -205,9 +223,11 @@ def get_cross_valiation_score(
     losses = []
     for k_fold_id in range(k_fold):
         mean_score, mean_loss = get_cross_valiation_score_by_fold_id(train_loader, param, k_fold_id, k_fold)
+        if DEBUG:
+            return mean_score, mean_loss
         scores.append(mean_score)
         losses.append(mean_loss)
-    return torch.mean(scores), torch.mean(losses)
+    return sum(scores) / len(scores), sum(losses) / len(losses)
 
 if __name__ == '__main__':
     with open('config/config_cnn.yaml', 'r') as f:
@@ -233,7 +253,7 @@ if __name__ == '__main__':
     batch_size = config['batch_size']
     n_epochs = config['n_epochs']  # suggest training between 20-50 epochs
 
-    num_workers = 12
+    num_workers = 0
 
     # 转换到 tensor 的 pipe
     transform = transforms.ToTensor()
@@ -245,8 +265,8 @@ if __name__ == '__main__':
                                     download=True, transform=transform)
 
     # 4.a Print-out the number of training/testing samples in the dataset
-    print("the number of train data samples: ", len(train_data))
-    print("the number of test data samples: ", len(test_data))
+    logger.info("the number of train data samples: {}".format(len(train_data)))
+    logger.info("the number of test data samples: {}".format(len(test_data)))
 
     # 创建训练集的数据加载器
     train_loader = torch.utils.data.DataLoader(train_data, batch_size=batch_size,
@@ -257,20 +277,22 @@ if __name__ == '__main__':
     # 初始化搜索参数
     param.activation_function = ActivationFunction.ELU
     param.dropout_rate = 0.1
-    param.optimizer_type = OptimizerType.Adam
+    param.optimizer_type = OptimizerType.Adagrad
     param.regularization = Regularization.L1
     param.lr_scheduler = LrScheduler.StepLR
     param.use_batch_normalization = True
     
+    
     for param_name in search_space:
         option_results = {k: None for k in search_space[param_name]}
         for option in option_results:
-            setattr(param, option)
+            logger.info('[solve {}] value: {}'.format(param_name, option))
+            setattr(param, param_name, option)
             score, loss = get_cross_valiation_score(train_loader, param, k_fold=4)
             option_results[option] = (score, loss)
         
-        print('test {}, result {}'.format(param_name, option_results))
+        logger.info('test {}, result {}'.format(param_name, option_results))
         best_option = sorted(option_results, key=lambda x : option_results[x][0], reverse=True)[0]
         # 设置为最好的
-        setattr(param, best_option)
-        print('select {} as best option in {}'.format(best_option, param_name))
+        setattr(param, param_name, best_option)
+        logger.info('select {} as best option in {}'.format(best_option, param_name))
