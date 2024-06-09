@@ -26,23 +26,24 @@
 
 | 类型                    | 值            | 测试结果（准确率, 损失值） | 选为最佳 |
 | ----------------------- | ------------- | -------------------------- | -------- |
-| lr_scheduler            | ExponentialLR | (1.0, 15.619668602673105)  | n        |
-| lr_scheduler            | StepLR        | (1.0, 13.25244172278986)   | y        |
-| activation_function     | ELU           | (1.0, 15.637316745154711)  | y        |
-| activation_function     | LeakyReLU     | (1.0, 16.12121235432268)   | n        |
-| activation_function     | ReLU          | (1.0, 16.06570986393087)   | n        |
-| optimizer_type          | ASGD          | (1.0, 17.12273691246569)   | n        |
-| optimizer_type          | Adagrad       | (1.0, 15.602299744309754)  | n        |
-| optimizer_type          | Adam          | (1.0, 14.63174570715076)   | n        |
-| optimizer_type          | RMSprop       | (1.0, 11.456997974659581)  | y        |
-| optimizer_type          | SGD           | (1.0, 17.121937025701648)  | n        |
-| use_batch_normalization | True          | (1.0, 17.11335802348563)   | n        |
-| use_batch_normalization | False         | (1.0, 15.819352854136167)  | y        |
-| regularization          | L2            | (1.0, 5.572004884008377)   | n        |
-| regularization          | none          | (1.0, 3.9114929326807832)  | y        |
-| dropout_rate            | 0             | (1.0, 17.014227313519605)  | y        |
-| dropout_rate            | 0.1           | (1.0, 17.117095237956836)  | n        |
-| dropout_rate            | 0.5           | (1.0, 17.33389894708214)   | n        |
+| lr_scheduler | ExponentialLR | (1.0, 15.629745891575372) | n |
+| lr_scheduler | StepLR | (1.0, 13.243702965528787) | y |
+| activation_function | ELU | (1.0, 13.253581967483573) | y |
+| activation_function | LeakyReLU | (1.0, 13.93985105669147) | n |
+| activation_function | ReLU | (1.0, 13.851820691913163) | n |
+| optimizer_type | ASGD | (1.0, 16.575578228956985) | n |
+| optimizer_type | Adagrad | (1.0, 13.261821218358687) | n |
+| optimizer_type | Adam | (1.0, 6.300606729357151) | n |
+| optimizer_type | RMSprop | (1.0, 4.235484918972262) | y |
+| optimizer_type | SGD | (1.0, 16.575101506953338) | n |
+| use_batch_normalization | True | (1.0, 4.2254295016632595) | n |
+| use_batch_normalization | False | (1.0, 4.033465600270533) | y |
+| regularization | L1 | (1.0, 4.035711534845045) | n |
+| regularization | L2 | (1.0, 3.0192787139053516) | n |
+| regularization | none | (1.0, 2.0184306293016387) | y |
+| dropout_rate | 0 | (1.0, 1.8041691664530306) | y |
+| dropout_rate | 0.1 | (1.0, 2.1592836721278643) | n |
+| dropout_rate | 0.5 | (1.0, 3.2241451888262818) | n |
 
 最终选择参数为：
 
@@ -58,24 +59,24 @@
 
 | 类型                    | 值            | 测试结果（准确率, 损失值） | 选为最佳 |
 | ----------------------- | ------------- | -------------------------- | -------- |
-| lr_scheduler            | ExponentialLR | (1.0, 15.074724356874048)  | n        |
-| lr_scheduler            | StepLR        | (1.0, 12.635740499647836)  | y        |
-| activation_function     | ELU           | (1.0, 15.09217919081517)   | y        |
-| activation_function     | LeakyReLU     | (1.0, 15.47391676254013)   | n        |
-| activation_function     | ReLU          | (1.0, 15.4565707604631)    | n        |
-| optimizer_type          | ASGD          | (1.0, 16.279444574498804)  | n        |
-| optimizer_type          | Adagrad       | (1.0, 15.219991266592288)  | n        |
-| optimizer_type          | Adam          | (1.0, 15.077001053189475)  | n        |
-| optimizer_type          | RMSprop       | (1.0, 12.39062147400006)   | y        |
-| optimizer_type          | SGD           | (1.0, 16.298378194000176)  | n        |
-| use_batch_normalization | True          | (1.0, 16.281248032100617)  | n        |
-| use_batch_normalization | False         | (1.0, 15.225514909848066)  | y        |
-| regularization          | L1            | (1.0, 16.28108634754103)   | n        |
-| regularization          | L2            | (1.0, 5.216115949645875)   | n        |
-| regularization          | none          | (1.0, 4.022819705966379)   | y        |
-| dropout_rate            | 0             | (1.0, 16.25941619418916)   | y        |
-| dropout_rate            | 0.1           | (1.0, 16.26675824189132)   | n        |
-| dropout_rate            | 0.5           | (1.0, 16.454123040716123)  | n        |
+| lr_scheduler | ExponentialLR | (1.0, 15.086300361724128) | n |
+| lr_scheduler | StepLR | (1.0, 12.653770111045059) | y |
+| activation_function | ELU | (1.0, 12.628354852702342) | y |
+| activation_function | LeakyReLU | (1.0, 13.27252043834349) | n |
+| activation_function | ReLU | (1.0, 13.32594824648228) | n |
+| optimizer_type | ASGD | (1.0, 16.22841906763799) | n |
+| optimizer_type | Adagrad | (1.0, 14.01044556397159) | n |
+| optimizer_type | Adam | (1.0, 12.663646914791357) | n |
+| optimizer_type | RMSprop | (1.0, 7.143918848091782) | y |
+| optimizer_type | SGD | (1.0, 16.242655677860284) | n |
+| use_batch_normalization | True | (1.0, 7.160499355690279) | n |
+| use_batch_normalization | False | (1.0, 4.059664526358754) | y |
+| regularization | L1 | (1.0, 4.0611087381163955) | n |
+| regularization | L2 | (1.0, 3.0089852243594306) | n |
+| regularization | none | (1.0, 2.4837508825352943) | y |
+| dropout_rate | 0 | (1.0, 2.441761591266883) | y |
+| dropout_rate | 0.1 | (1.0, 2.4584112723533256) | n |
+| dropout_rate | 0.5 | (1.0, 2.9035511753456396) | n |
 
 最终选择参数为：
 

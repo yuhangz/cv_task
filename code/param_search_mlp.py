@@ -262,7 +262,8 @@ if __name__ == '__main__':
             option_results[option] = (score, loss)
         
         logger.info('test {}, result {}'.format(param_name, option_results))
-        best_option = sorted(option_results, key=lambda x : option_results[x][0], reverse=True)[0]
+        best_option = sorted(option_results, key=lambda x : option_results[x][0] * 1000 - option_results[x][1], reverse=True)[0]
         # 设置为最好的
         setattr(param, param_name, best_option)
         logger.info('select {} as best option in {}'.format(best_option, param_name))
+        print('after set: ', param.lr_scheduler, param.activation_function, param.optimizer_type, param.use_batch_normalization, param.regularization, param.dropout_rate)

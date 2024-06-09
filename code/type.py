@@ -39,4 +39,5 @@ search_space = {
     'dropout_rate': [0, 0.1, 0.5]
 }
 
-print(search_space)
+for k in search_space:
+    print(k)
